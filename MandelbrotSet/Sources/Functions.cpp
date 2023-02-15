@@ -158,18 +158,22 @@ void createMandelbrotFilesColor() {
 	char FolderName[100] = DataFilesDirectory;
 	printf("FOLDER NAME:  ");
 	scanf("%s", FolderName + DirectoryStringLenght);
-	_mkdir(FolderName);
+	if (_mkdir(FolderName)) {
+		_mkdir(DataFilesDirectory);
+		_mkdir(FolderName);
+	}
 
 	double ti = clock();
 
+	char Names[NumberOfFiles][10] = FilesNames;
 	char** FilesName = (char**)calloc(NumberOfFiles, sizeof(void*));
 	for (int i = 0; i < NumberOfFiles; i++) {
 		FilesName[i] = (char*)calloc(100, sizeof(char));
 		int j = 0;
 		while (FolderName[j]) { FilesName[i][j] = FolderName[j]; j++; }
 		FilesName[i][j] = '/'; j++;
-		if (i < 10) { FilesName[i][j] = 48 + i; j++; }
-		else { FilesName[i][j] = 87 + i; j++; }
+		int k = 0;
+		while (Names[i][k]) { FilesName[i][j] = Names[i][k]; j++; k++; }
 		FilesName[i][j] = '.'; j++;
 		FilesName[i][j] = 'd'; j++;
 		FilesName[i][j] = 'a'; j++;
@@ -230,5 +234,33 @@ void createMandelbrotFilesColor() {
 
 	for (int i = 0; i < NumberOfFiles; i++)fclose(Files[i]);
 
+
+	char GNU[100] = GnuplotFileName;
+	createGnuplotFile(FolderName, GNU);
+
 	printf("Computation time %.3fs", (clock() - ti) / CLOCKS_PER_SEC);
+}
+
+void createGnuplotFile(const char* FolderName, const char* FileName) {
+	char* FileLocation = (char*)calloc(sizeof(char), 100);
+	int i = 0;
+	while (FolderName[i]) { FileLocation[i] = FolderName[i]; i++; }
+	FileLocation[i] = '/'; i++;
+	int j = 0;
+	while (FileName[j]) { FileLocation[i] = FileName[j]; i++; j++; }
+
+	FILE* file = fopen(FileLocation, "w");
+
+	fprintf(file, "set xrange [%.15f:%.15f]\n", X0, X1);
+	fprintf(file, "set yrange [%.15f:%.15f]\n", Y0, Y1);
+	fprintf(file, "plot \\\n");
+
+	char Names[NumberOfFiles][10] = FilesNames;
+	char ColorCode[NumberOfFiles][8] = FileColorCode;
+	for (int i = 0; i < NumberOfFiles; i++) {
+		fprintf(file, "\"%s.dat\"  pt 0 lc rgb \"%s\" notitle", Names[i], ColorCode[i]);
+		if (i != NumberOfFiles - 1)fprintf(file, ", \\\n");
+	}
+
+	fclose(file);
 }
