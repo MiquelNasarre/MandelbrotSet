@@ -18,7 +18,7 @@ bool Iterate(double a, double b) {
 		bt[0] = b;
 		a = at[0] * at[0] - bt[0] * bt[0] + a0;
 		b = 2 * bt[0] * at[0] + b0;
-		if (fabs(a) > 10 || fabs(b) > 10)return false;
+		if (fabs(a) > Divergence || fabs(b) > Divergence)return false;
 		
 	}
 	return true;
@@ -131,7 +131,7 @@ int ColorIterate(double a, double b) {
 		bt[0] = b;
 		a = at[0] * at[0] - bt[0] * bt[0] + a0;
 		b = 2 * bt[0] * at[0] + b0;
-		if (fabs(a) > 10 || fabs(b) > 10)return i;
+		if (fabs(a) > Divergence || fabs(b) > Divergence)return i;
 
 	}
 	return 0;
@@ -234,14 +234,13 @@ void createMandelbrotFilesColor() {
 
 	for (int i = 0; i < NumberOfFiles; i++)fclose(Files[i]);
 
-
-	char GNU[100] = GnuplotFileName;
-	createGnuplotFile(FolderName, GNU);
+	createGnuplotFile(FolderName);
 
 	printf("Computation time %.3fs", (clock() - ti) / CLOCKS_PER_SEC);
 }
 
-void createGnuplotFile(const char* FolderName, const char* FileName) {
+void createGnuplotFile(const char* FolderName) {
+	char FileName[] = GnuplotFileName;
 	char* FileLocation = (char*)calloc(sizeof(char), 100);
 	int i = 0;
 	while (FolderName[i]) { FileLocation[i] = FolderName[i]; i++; }
@@ -253,6 +252,7 @@ void createGnuplotFile(const char* FolderName, const char* FileName) {
 
 	fprintf(file, "set xrange [%.15f:%.15f]\n", X0, X1);
 	fprintf(file, "set yrange [%.15f:%.15f]\n", Y0, Y1);
+	fprintf(file, "set mouse format \"%s\"\n", MouseFormat);
 	fprintf(file, "plot \\\n");
 
 	char Names[NumberOfFiles][10] = FilesNames;
