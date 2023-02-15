@@ -37,7 +37,7 @@ In order to modify the variables to plot different parts of the fractal or chang
 file. There you will find a lot of macros defining different settings and variables from the program that you may wanna change, there's 
 a lot of them but their names are mostly self explanatory so it shouldn't be hard to get used to them.
 ## Additional
-Last and also least important is the fact that the project also contain some older functions. They do a black and white color plot of 
+Last and also least important is the fact that the project also contains some older functions. They do a black and white color plot of 
 the set, but they also allow to print more precise plots in the boundaries of the set without filling the files with useless points, using 
 a technique similar to the grid we see in the color plot. It's probably not very efficient but I didn't want to remove it from the project 
 so it's also available.
