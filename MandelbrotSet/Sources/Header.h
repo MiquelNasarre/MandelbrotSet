@@ -9,7 +9,7 @@
 
 // MATH SETTINGS
 
-#define Iterations 20000
+#define Iterations 5000
 #define X0 -1.2496
 #define X1 -1.1879
 #define Y0 0.1293
@@ -17,7 +17,7 @@
 #define Xpoints 2000
 #define Ypoints 2000
 #define OrbitFinder 4
-#define GridLenght 3
+#define GridLenght 4
 #define Epsilon 1e-6
 #define Divergence 10
 
