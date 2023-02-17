@@ -31,7 +31,7 @@ probably going to be all the same color so it doesn't bother calculating each po
 ## How to use it
 Once you've cloned you can already compile and run the program and it will create the DataFiles folder inside the solution folder. 
 In that folder they will appear all the different plots you created with this program, to visualize them you just need to enter 
-inside the their folders and open the GnuPlotFile.plt with gnuplot. The initial plot generated will be the one you see above.
+inside their folders and open the GnuPlotFile.plt with gnuplot. The initial plot generated will be the one you see above.
 
 In order to modify the variables to plot different parts of the fractal or change certain settings you can do it all from the header 
 file. There you will find a lot of macros defining different settings and variables from the program that you may wanna change, there's 
